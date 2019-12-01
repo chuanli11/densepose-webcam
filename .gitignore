@@ -1,5 +1,8 @@
 # Virtual Environment
 venv2/*
+DensePoseData/DensePose_COCO/*
+DensePoseData/eval_data/*
+DensePoseData/infer_out/*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
