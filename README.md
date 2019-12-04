@@ -30,8 +30,15 @@ docker commit $(docker ps --last 1 -q) densepose:c2-cuda9-cudnn7-wdata
 
 xhost + 
 
-nvidia-docker run --rm -v /home/ubuntu/densepose-webcam/DensePoseData:/denseposedata -v /home/ubuntu/data/coco:/coco -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix --device=/dev/video0:/dev/video0 --env QT_X11_NO_MITSHM=1 -it densepose:c2-cuda9-cudnn7-wdata 
+nvidia-docker run --rm -v /home/ubuntu/densepose-webcam/DensePoseData:/denseposedata -v /home/ubuntu/densepose-webcam/models:/models -v /home/ubuntu/densepose-webcam/update:/update -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix --device=/dev/video0:/dev/video0 --env QT_X11_NO_MITSHM=1 -it densepose:c2-cuda9-cudnn7-wdata 
 
-# Turing GPU seems to be problematic
-CUDA_VISIBLE_DEVICES=1 python tools/infer_webcam2.py --cfg configs/DensePose_ResNet101_FPN_s1x-e2e.yaml --wts https://dl.fbaipublicfiles.com/densepose/DensePose_ResNet101_FPN_s1x-e2e.pkl
+python tools/infer_webcam2.py --cfg configs/DensePose_ResNet50_FPN_s1x-e2e.yaml --wts https://dl.fbaipublicfiles.com/densepose/DensePose_ResNet50_FPN_s1x-e2e.pkl
+
+
+
+
+python tools/infer_webcam2.py --cfg configs/DensePose_ResNet50_FPN_s1x-e2e.yaml --wts /models/DensePose_ResNet50_FPN_s1x-e2e.pkl
+
+# To update, edit the script in the update folder on host, then recopy to tools in the container
+cp /update/infer_webcam2.py tools/
 ```

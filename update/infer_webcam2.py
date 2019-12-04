@@ -151,13 +151,26 @@ def main(args):
     while True:
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
+        
+        scaler = 0.25
         retval, im = cam.read()
-        #imsmall = cv2.resize(im, None, fx=0.5, fy=0.5)
+        imsmall = cv2.resize(im, None, fx=scaler, fy=scaler)
 
         with c2_utils.NamedCudaScope(0):
             cls_boxes, cls_segms, cls_keyps, cls_bodys = infer_engine.im_detect_all(
-                model, im, None, timers=None
+                model, imsmall, None, timers=None
             )
+
+
+        cls_boxes = [ b if isinstance(b, list) else b * (1 / scaler) for b in cls_boxes ]
+
+        for b in cls_bodys:
+            if len(b) > 0:
+                for i, bb in enumerate(b):
+                    b0 = cv2.resize(bb[0], None, fx= 1 / scaler, fy=1 / scaler, interpolation=cv2.INTER_NEAREST)
+                    b1 = cv2.resize(bb[1], None, fx= 1 / scaler, fy=1 / scaler, interpolation=cv2.INTER_LINEAR)
+                    b2 = cv2.resize(bb[2], None, fx= 1 / scaler, fy=1 / scaler, interpolation=cv2.INTER_LINEAR)
+                    b[i] = np.stack([b0, b1, b2])
 
         iuvout, indsout = vis_utils.vis_webcam(
             im,
@@ -172,8 +185,11 @@ def main(args):
             dataset=dummy_coco_dataset,
             show_class=True,
         )
-        #cv2.imshow('input', im)
-        texout = TransferTexturePure(TextureIm, im, iuvout)
+
+
+        # cv2.imshow('input', indsout)
+        texout = TransferTexturePure(TextureIm, imsmall, iuvout)
+        texout = cv2.resize(texout, None, fx=2.0, fy=2.0)
         cv2.imshow('output', texout)
 
 

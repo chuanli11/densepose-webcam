@@ -153,6 +153,7 @@ def main(args):
             break
         retval, im = cam.read()
         #imsmall = cv2.resize(im, None, fx=0.5, fy=0.5)
+        im = cv2.resize(im, None, fx=0.5, fy=0.5)
 
         with c2_utils.NamedCudaScope(0):
             cls_boxes, cls_segms, cls_keyps, cls_bodys = infer_engine.im_detect_all(
@@ -174,6 +175,7 @@ def main(args):
         )
         #cv2.imshow('input', im)
         texout = TransferTexturePure(TextureIm, im, iuvout)
+        texout = cv2.resize(texout, None, fx=2.0, fy=2.0)
         cv2.imshow('output', texout)
 
 
