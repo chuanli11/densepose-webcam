@@ -128,7 +128,7 @@ def TransferTexturePure(TextureIm,im,IUV):
         B_im[IUV[:,:,0]==PartInd] = b_current_points
     generated_image = np.concatenate((B_im[:,:,np.newaxis],G_im[:,:,np.newaxis],R_im[:,:,np.newaxis]), axis =2 ).astype(np.uint8)
     BG_MASK = generated_image==0
-    #generated_image[BG_MASK] = im[BG_MASK]  ## Set the BG as the old image.
+    generated_image[BG_MASK] = im[BG_MASK]  ## Set the BG as the old image.
     return generated_image
 
 
