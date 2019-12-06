@@ -64,6 +64,18 @@ def parse_args():
         default=None,
         type=str
     )
+    parser.add_argument(
+        '--scaler_down',
+        help='down sample ratio for detection',
+        default=0.5,
+        type=float
+    )
+    parser.add_argument(
+        '--scaler_up',
+        help='up sample ratio for rendering. Notice this number is divided by scaler_down before bing applied',
+        default=1.0,
+        type=float
+    )       
     if len(sys.argv) == 1:
         parser.print_help()
         sys.exit(1)
@@ -156,13 +168,13 @@ def main(args):
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
         
-        scaler = 0.5
+        
 
         total_start = time.time()
 
         start = time.time()
         retval, im = cam.read()
-        imsmall = cv2.resize(im, None, fx=scaler, fy=scaler)
+        imsmall = cv2.resize(im, None, fx=args.scaler_down, fy=args.scaler_down)
         end = time.time()
 
         print("camera read and resize {}".format(end - start))
@@ -205,7 +217,7 @@ def main(args):
         print("TransferTexturePure {}".format(end - start))
 
         start = time.time()
-        texout = cv2.resize(texout, None, fx= 1/scaler, fy=1/scaler)
+        texout = cv2.resize(texout, None, fx= args.scaler_up / args.scaler_down, fy=args.scaler_up / args.scaler_down)
         end = time.time()
         print("final resize {}".format(end - start))
 
