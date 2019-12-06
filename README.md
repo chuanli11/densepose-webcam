@@ -55,6 +55,12 @@ Add new texture to `update/new_texture.png`. Overwrite the texture when running 
 cp /update/new_texture.png DensePoseData/demo_data/texture_from_SURREAL.png & cp /update/vis.py detectron/utils/ & cp /update/test.py detectron/core/ & python neurips/infer_webcam_fast2.py --cfg configs/DensePose_ResNet50_FPN_s1x-e2e.yaml --wts /models/DensePose_ResNet50_FPN_s1x-e2e.pkl
 ```
 
+For example
+
+```
+cp /update/texture_from_SURREAL_penink.png DensePoseData/demo_data/texture_from_SURREAL.png & cp /update/vis.py detectron/utils/ & cp /update/test.py detectron/core/ & python neurips/infer_webcam_fast2.py --cfg configs/DensePose_ResNet50_FPN_s1x-e2e.yaml --wts /models/DensePose_ResNet50_FPN_s1x-e2e.pkl
+```
+
 __Change Detection Resolution__
 
 
