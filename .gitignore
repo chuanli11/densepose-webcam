@@ -42,3 +42,5 @@ configs_old/*
 
 
 .nfs*
+
+*.pkl.*
