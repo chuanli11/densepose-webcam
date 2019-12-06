@@ -57,6 +57,5 @@ cp /update/new_texture.png DensePoseData/demo_data/texture_from_SURREAL.png & cp
 
 __Change Detection Resolution__
 
-```
-Change the `scaler` parameter (default 0.5) in `infer_webcam_fast2.py`. 
-```
+
+Simply change the `scaler` parameter (default 0.5) in `update/infer_webcam_fast2.py`. Notice the `update` folder on the host is mounted as the `neurips` folder in the container. The change automatically takes effect.
