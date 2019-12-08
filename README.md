@@ -44,7 +44,7 @@ xhost +
 
 nvidia-docker run --rm -v /home/ubuntu/densepose-webcam/DensePoseData:/denseposedata -v /home/ubuntu/densepose-webcam/models:/models -v /home/ubuntu/densepose-webcam/update:/densepose-webcam/neurips -v /home/ubuntu/densepose-webcam/update:/update -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix --device=/dev/video0:/dev/video0 --env QT_X11_NO_MITSHM=1 -it densepose-webcam:c2-cuda10-cudnn7
 
-cp /update/vis.py detectron/utils/ & cp /update/test.py detectron/core/ & python neurips/infer_webcam_fast2.py --cfg configs/DensePose_ResNet50_FPN_s1x-e2e.yaml --wts /models/DensePose_ResNet50_FPN_s1x-e2e.pkl --scaler_down 0.5 --scaler_up 1.0
+cp /update/texture_from_SURREAL_penink_lambda_yellow_black.png DensePoseData/demo_data/texture_from_SURREAL.png & cp /update/vis.py detectron/utils/ & cp /update/test.py detectron/core/ & python neurips/infer_webcam_fast2.py --cfg configs/DensePose_ResNet50_FPN_s1x-e2e.yaml --wts /models/DensePose_ResNet50_FPN_s1x-e2e.pkl --scaler_down 0.5 --scaler_up 2.0
 ```
 
 __Change Texture__
